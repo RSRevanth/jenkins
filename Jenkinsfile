@@ -30,6 +30,15 @@ pipeline {
                 echo 'Deploying..'
             }
         }
+        stage('Example') {
+            environment { 
+                AUTH = credentials('ssh-auth') 
+            }
+            steps {
+                sh 'printenv'
+            }
+        }
+    }
     }
 
     post { 

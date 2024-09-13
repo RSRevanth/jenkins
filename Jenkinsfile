@@ -1,15 +1,23 @@
 pipeline {
     agent { node { label 'Agent_1' } }
+    options {
+        // Timeout counter starts AFTER agent is allocated
+        timeout(time: 1, unit: 'HOURS')
+    }
+    environment { 
+        USER = 'Sattibabu'
+    }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
-              sh '''
-                ls -ltr
-                pwd
-                echo  "Hello from GitHub push webhook event"
-              '''
+               sh'''
+                   ls -ltr
+                   pwd
+                   echo "Hello from GitHub push webhook event"
+                   printenv
+               '''
             }
         }
         stage('Test') {
@@ -18,20 +26,21 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+            steps{
+                echo 'Deploying..'
             }
         }
     }
+
     post { 
         always { 
-            echo 'I will always run wether job is success or not'
+            echo 'I will always run whether job is success or not'
         }
-        success {
+        success{
             echo 'I will run only when job is success'
         }
-        failure {
-            echo 'I will run only when job is fail'
+        failure{
+            echo 'I will run when failure'
         }
     }
 }

@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Example') {
             environment { 
-                AUTH = credentials('ssh-auth') 
+                AUTH = credentials('ubuntu') 
             }
             steps {
                 sh 'printenv'
